@@ -49,6 +49,7 @@ class Salesforce:
             domain=None,
             consumer_key=None,
             privatekey_file=None,
+            privatekey=None,
             ):
         """Initialize the instance with the given parameters.
 
@@ -155,7 +156,8 @@ class Salesforce:
                 domain=self.domain)
 
         elif all(arg is not None for arg in (
-                username, consumer_key, privatekey_file)):
+                username, consumer_key)) and any(arg is not None for arg in (
+                privatekey_file, privatekey)):
             self.auth_type = "jwt-bearer"
 
             # Pass along the username/password to our login helper
@@ -164,6 +166,7 @@ class Salesforce:
                 username=username,
                 consumer_key=consumer_key,
                 privatekey_file=privatekey_file,
+                privatekey=privatekey,
                 proxies=self.proxies,
                 domain=self.domain)
 
